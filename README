@@ -1,0 +1,7 @@
+For Message bus or CQRS we need this package
+
+composer require symfony/messenger
+
+Need monolog bundle for log
+
+composer require symfony/monolog-bundle

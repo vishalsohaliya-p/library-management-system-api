@@ -9,7 +9,7 @@ class AvailableStatus{
     private int $availableStatusId;
     private string $availableStatusName;
     private DateTimeInterface $createdAt;
-    private int $createBy;
+    private int $createdBy;
     private ?DateTimeInterface $modifiedAt;
     private int $modifiedBy;
     private bool $isActive;
@@ -42,13 +42,13 @@ class AvailableStatus{
         $this->createdAt = $createdAt;
     }
 
-    // Getter and Setter for createBy
-    public function getCreateBy(): int {
-        return $this->createBy;
+    // Getter and Setter for createdBy
+    public function getcreatedBy(): int {
+        return $this->createdBy;
     }
 
-    public function setCreateBy(int $createBy): void {
-        $this->createBy = $createBy;
+    public function setcreatedBy(int $createdBy): void {
+        $this->createdBy = $createdBy;
     }
 
     // Getter and Setter for modifiedAt

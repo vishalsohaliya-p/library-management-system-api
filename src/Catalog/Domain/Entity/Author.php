@@ -3,6 +3,8 @@
 namespace App\Catalog\Domain\Entity;
 
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 class Author {
 
@@ -14,11 +16,17 @@ class Author {
     private string $photo;
     private ?string $bio = \null;
     private DateTimeInterface $createdAt;
-    private int $createBy;
+    private int $createdBy;
     private ?DateTimeInterface $modifiedAt;
     private int $modifiedBy;
     private bool $isActive;
     private bool $isDeleted;
+
+    private Collection $books;
+
+    public function __construct(){
+        $this->books = new ArrayCollection();
+    }
 
 
     // Getter and Setter for authorId
@@ -93,13 +101,13 @@ class Author {
         $this->createdAt = $createdAt;
     }
 
-    // Getter and Setter for createBy
-    public function getCreateBy(): int {
-        return $this->createBy;
+    // Getter and Setter for createdBy
+    public function getcreatedBy(): int {
+        return $this->createdBy;
     }
 
-    public function setCreateBy(int $createBy): void {
-        $this->createBy = $createBy;
+    public function setcreatedBy(int $createdBy): void {
+        $this->createdBy = $createdBy;
     }
 
     // Getter and Setter for modifiedAt

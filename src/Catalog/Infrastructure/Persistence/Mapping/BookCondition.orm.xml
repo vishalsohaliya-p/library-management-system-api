@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Catalog\Domain\Entity\BookCondition" table="book_conditions">
+        <id name="bookConditionId" type="integer" column="book_condition_id">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="bookConditionName" type="string" column="book_condition_name" length="100" nullable="false"/>
+
+        <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
+        <field name="createdBy" type="integer" column="created_by" nullable="false"/>
+        <field name="modifiedAt" type="datetime" column="modified_at" nullable="true"/>
+        <field name="modifiedBy" type="integer" column="modified_by" nullable="false"/>
+
+        <field name="isActive" type="boolean" column="is_active" nullable="false"/>
+        <field name="isDeleted" type="boolean" column="is_deleted" nullable="false"/>
+    </entity>
+</doctrine-mapping>

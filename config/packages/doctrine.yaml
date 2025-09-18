@@ -16,14 +16,14 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         identity_generation_preferences:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
-        auto_mapping: true
+        auto_mapping: false  # Disable global auto-mapping since we configure mappings manually
         mappings:
-            App:
-                type: attribute
+            Catalog:
+                type: xml
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+                dir: '%kernel.project_dir%/src/Catalog/Infrastructure/Persistence/Mapping'
+                prefix: 'App\Catalog\Domain\Entity'
+                alias: Catalog
         controller_resolver:
             auto_mapping: false
 

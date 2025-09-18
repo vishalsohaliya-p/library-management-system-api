@@ -3,6 +3,8 @@
 namespace App\Catalog\Domain\Entity;
 
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 class Book{
     private int $bookId;
@@ -15,15 +17,21 @@ class Book{
     private ?string $shelfLocation;
     private string $coverImage;
     private string $description;
-    private int $authorId;
-    private int $categoryId;
-    private int $languageId;
     private DateTimeInterface $createdAt;
-    private int $createBy;
+    private int $createdBy;
     private ?DateTimeInterface $modifiedAt;
     private int $modifiedBy;
     private bool $isActive;
     private bool $isDeleted;
+
+    private Collection $authors;
+    private Category $category;
+
+    private Language $language;
+
+    public function __construct(){
+        $this->authors = new ArrayCollection();
+    }
 
     // Getter and Setter for bookId
     public function getBookId(): int {
@@ -115,33 +123,6 @@ class Book{
         $this->description = $description;
     }
 
-    // Getter and Setter for authorId
-    public function getAuthorId(): int {
-        return $this->authorId;
-    }
-
-    public function setAuthorId(int $authorId): void {
-        $this->authorId = $authorId;
-    }
-
-    // Getter and Setter for categoryId
-    public function getCategoryId(): int {
-        return $this->categoryId;
-    }
-
-    public function setCategoryId(int $categoryId): void {
-        $this->categoryId = $categoryId;
-    }
-
-    // Getter and Setter for languageId
-    public function getLanguageId(): int {
-        return $this->languageId;
-    }
-
-    public function setLanguageId(int $languageId): void {
-        $this->languageId = $languageId;
-    }
-
     // Getter and Setter for createdAt
     public function getCreatedAt(): DateTimeInterface {
         return $this->createdAt;
@@ -151,13 +132,13 @@ class Book{
         $this->createdAt = $createdAt;
     }
 
-    // Getter and Setter for createBy
-    public function getCreateBy(): int {
-        return $this->createBy;
+    // Getter and Setter for createdBy
+    public function getcreatedBy(): int {
+        return $this->createdBy;
     }
 
-    public function setCreateBy(int $createBy): void {
-        $this->createBy = $createBy;
+    public function setcreatedBy(int $createdBy): void {
+        $this->createdBy = $createdBy;
     }
 
     // Getter and Setter for modifiedAt
@@ -194,5 +175,25 @@ class Book{
 
     public function setIsDeleted(bool $isDeleted): void {
         $this->isDeleted = $isDeleted;
+    }
+
+    public function getCategory(): Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(Category $category): void
+    {
+        $this->category = $category;
+    }
+
+    public function getLanguage(): Language
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(Language $language): void
+    {
+        $this->language = $language;
     }
 }

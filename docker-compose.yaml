@@ -1,0 +1,23 @@
+services:
+  mysql:
+    image: mysql:9
+    container_name: symfony_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: library_management_system
+      MYSQL_USER: symfony
+      MYSQL_PASSWORD: symfony
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      #- /home/you/project/var/docker/mysql:/var/lib/mysql #bin Mount method hostpath:containerpath
+    # healthcheck:
+    #   test: ["CMD-SHELL", "mysqladmin ping -h localhost -u symfony --password=symfony || exit 1"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+    restart: unless-stopped
+
+volumes:
+  mysql_data:

@@ -2,17 +2,23 @@
 
 namespace App\Catalog\Domain\Entity;
 
+use DateTimeImmutable;
 use DateTimeInterface;
 
 class Language{
     private int $languageId;
     private string $languageName;
     private DateTimeInterface $createdAt;
-    private int $createBy;
+    private int $createdBy;
     private ?DateTimeInterface $modifiedAt;
-    private int $modifiedBy;
+    private ?int $modifiedBy;
     private bool $isActive;
     private bool $isDeleted;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTimeImmutable();
+    }
 
     // Getter and Setter for languageId
     public function getLanguageId(): int {
@@ -41,13 +47,13 @@ class Language{
         $this->createdAt = $createdAt;
     }
 
-    // Getter and Setter for createBy
-    public function getCreateBy(): int {
-        return $this->createBy;
+    // Getter and Setter for createdBy
+    public function getcreatedBy(): int {
+        return $this->createdBy;
     }
 
-    public function setCreateBy(int $createBy): void {
-        $this->createBy = $createBy;
+    public function setcreatedBy(int $createdBy): void {
+        $this->createdBy = $createdBy;
     }
 
     // Getter and Setter for modifiedAt
@@ -60,7 +66,7 @@ class Language{
     }
 
     // Getter and Setter for modifiedBy
-    public function getModifiedBy(): int {
+    public function getModifiedBy(): ?int {
         return $this->modifiedBy;
     }
 
@@ -69,7 +75,7 @@ class Language{
     }
 
     // Getter and Setter for isActive
-    public function isActive(): bool {
+    public function getIsActive(): bool {
         return $this->isActive;
     }
 
@@ -78,7 +84,7 @@ class Language{
     }
 
     // Getter and Setter for isDeleted
-    public function isDeleted(): bool {
+    public function getIsDeleted(): bool {
         return $this->isDeleted;
     }
 
