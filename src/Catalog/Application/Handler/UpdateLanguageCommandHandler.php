@@ -19,11 +19,12 @@ class UpdateLanguageCommandHandler
     public function __invoke(UpdateLanguageCommand $command): void
     {
         $language = $this->languageRepository->getById($command->languageId);
-
+        
         $language->setLanguageName($command->languageName);
         $language->setModifiedBy($command->modifiedBy);
         $language->setModifiedAt(new DateTimeImmutable());
         $language->setIsActive($command->isActive);
+        $language->setIsDeleted($command->isDeleted);
 
         $this->languageRepository->update($language);
     }

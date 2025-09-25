@@ -10,9 +10,11 @@ use App\Catalog\Application\DTO\LanguageResponseDto;
 use App\Catalog\Application\DTO\UpdateLanguageDto;
 use App\Catalog\Application\Query\GetAllLanguageQuery;
 use App\Catalog\Application\Query\GetlangauageByIdQuery;
+use App\Shared\Infrastructure\Http\ApiResponse;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -41,7 +43,7 @@ class LanguageController extends AbstractController{
             , $addLanguageDto->isDeleted);
 
         $this->messageBus->dispatch($command);
-        return $this->json(['status' => 'Language Added'], JsonResponse::HTTP_CREATED);
+        return ApiResponse::success(status: Response::HTTP_CREATED);
     }
 
     #[Route("/", "list-language", methods:["GET"])]
@@ -62,10 +64,10 @@ class LanguageController extends AbstractController{
         )
         , $languages);
 
-        return $this->json($data, JsonResponse::HTTP_OK);
+        return ApiResponse::success($data);
     }
 
-    #[Route("/{id}","find-language", methods:["GET"])]
+    #[Route("/{id}","find-language", requirements: ["id"=> '\d+'], methods:["GET"])]
     public function getById(int $id): JsonResponse
     {
         $query = new GetlangauageByIdQuery($id);
@@ -76,16 +78,16 @@ class LanguageController extends AbstractController{
             languageName: $language->getLanguageName(),
             createdAt: $language->getCreatedAt(),
             createdBy: $language->getCreatedBy(),
-            modifiedAt: $language->getModifiedBy(),
+            modifiedAt: $language->getModifiedAt(),
             modifiedBy: $language->getModifiedBy(),
             isActive: $language->getIsActive(),
             isDeleted: $language->getIsDeleted(),
         );
 
-        return $this->json($data, JsonResponse::HTTP_OK);
+        return ApiResponse::success($data);
     }
 
-    #[Route("/{id}","update-language", methods: ["PUT"])]
+    #[Route("/{id}","update-language", requirements: ["id"=> '\d+'], methods: ["PUT"])]
     public function put(#[MapRequestPayload] UpdateLanguageDto $updateLanguageDto, int $id): JsonResponse
     {
         $command = new UpdateLanguageCommand(
@@ -98,16 +100,16 @@ class LanguageController extends AbstractController{
         $language = $this->handle($command);
 
         $this->messageBus->dispatch($command);
-        return $this->json(['status' => 'Language Updated'], JsonResponse::HTTP_CREATED);
+        return ApiResponse::success(status: Response::HTTP_NO_CONTENT);
     }
 
-    #[Route("/{id}","delete-language", methods:["DELETE"])]
+    #[Route("/{id}","delete-language", requirements: ["id"=> '\d+'], methods:["DELETE"])]
     public function delete(int $id): JsonResponse
     {
         $command = new DeleteLangauageByIdCommand(
             $id
             ,1);
         $this->messageBus->dispatch($command);
-        return $this->json(['status' => 'Language Deleted'], JsonResponse::HTTP_OK);
+        return ApiResponse::success(status: Response::HTTP_NO_CONTENT);
     }
 }

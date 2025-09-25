@@ -5,3 +5,14 @@ composer require symfony/messenger
 Need monolog bundle for log
 
 composer require symfony/monolog-bundle
+
+composer require symfony/serializer --This is require for auto map request to dto
+
+composer require symfony/validator --This is require for request validation.
+
+composer require lexik/jwt-authentication-bundle --This is require for request validation
+
+bin/console lexik:jwt:generate-keypair --This is for key generation Your keys will land in config/jwt/private.pem and config/jwt/public.pem (unless you configured a different path).
+
+    --skip-if-exists will silently do nothing if keys already exist.
+    --overwrite will overwrite your keys if they already exist.
