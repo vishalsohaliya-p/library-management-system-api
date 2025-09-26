@@ -60,9 +60,19 @@ class ExceptionListener implements EventSubscriberInterface
             $message    = $exception->getMessage();
         }
         //Optional: in dev, expose full exception message
-        elseif ($_ENV['APP_ENV'] === 'dev') {
-           $message = $exception->getMessage();
+        else {
+            if ($_ENV['APP_ENV'] === 'dev') {
+                $message = $exception->getMessage(); // show full message in dev
+            } else {
+                $message = 'An unexpected error occurred.'; // safe generic message
+            }
         }
+
+        // Always log the real exception internally
+        // (inject LoggerInterface in constructor)
+        $this->logger->error($exception->getMessage(), [
+            'exception' => $exception,
+        ]);
 
         $response = ApiResponse::error($errorCode, $message, $details, $statusCode);
         $event->setResponse($response);

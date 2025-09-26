@@ -3,3 +3,8 @@ controllers_catalog:
         path: ../src/Catalog/Presentation/Controller/
         namespace: App\Catalog\Presentation\Controller
     type: attribute
+controllers_membership:
+    resource:
+        path: ../src/Membership/Presentation/Controller/
+        namespace: App\Membership\Presentation\Controller
+    type: attribute

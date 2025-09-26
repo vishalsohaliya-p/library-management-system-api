@@ -16,3 +16,6 @@ bin/console lexik:jwt:generate-keypair --This is for key generation Your keys wi
 
     --skip-if-exists will silently do nothing if keys already exist.
     --overwrite will overwrite your keys if they already exist.
+
+composer require symfony/security-bundle --This is needed for authorization
+That will also pull in symfony/security-core and friends automatically.

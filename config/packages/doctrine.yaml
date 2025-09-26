@@ -24,6 +24,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Catalog/Infrastructure/Persistence/Mapping'
                 prefix: 'App\Catalog\Domain\Entity'
                 alias: Catalog
+            Membership:
+                type: xml
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Membership/Infrastructure/Persistence/Mapping'
+                prefix: 'App\Membership\Domain\Entity'
+                alias: Membership
         controller_resolver:
             auto_mapping: false
 

@@ -4,11 +4,25 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
+        # Custom provider to load domain Librarian and return LibrarianUser
+        app_user_provider:
+            id: App\Membership\Infrastructure\Security\LibrarianUserProvider
         users_in_memory: { memory: null }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        # Login route (open)
+        login:
+            pattern: ^/librarian/login
+            stateless: true
+            security: false
+        # API routes (JWT authentication)
+        api:
+            pattern: ^/
+            stateless: true
+            provider: app_user_provider
+            jwt: ~
         main:
             lazy: true
             provider: users_in_memory
@@ -24,6 +38,11 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        # Open login endpoint
+        - { path: ^/librarians/login, roles: PUBLIC_ACCESS }
+
+        # All other routes require a valid token
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:
