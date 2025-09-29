@@ -2,7 +2,7 @@
 
 namespace App\Catalog\Application\Query;
 
-class GetlangauageByIdQuery
+class GetLangauageByIdQuery
 {
     public function __construct(public int $languageId)
     {

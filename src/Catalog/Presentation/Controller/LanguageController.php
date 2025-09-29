@@ -70,7 +70,7 @@ class LanguageController extends AbstractController{
     #[Route("/{id}","find-language", requirements: ["id"=> '\d+'], methods:["GET"])]
     public function getById(int $id): JsonResponse
     {
-        $query = new GetlangauageByIdQuery($id);
+        $query = new GetLangauageByIdQuery($id);
         $language = $this->handle($query);
 
         $data = new LanguageResponseDto(

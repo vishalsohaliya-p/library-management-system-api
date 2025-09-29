@@ -4,6 +4,7 @@ namespace App\Catalog\Application\Handler;
 
 use App\Catalog\Application\Command\UpdateLanguageCommand;
 use App\Catalog\Domain\Entity\Language;
+use App\Catalog\Domain\Repository\LanguageRepositoryInterface;
 use App\Catalog\Infrastructure\Repository\LanguageRepository;
 use DateTimeImmutable;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -11,7 +12,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler(handles:UpdateLanguageCommand::class)]
 class UpdateLanguageCommandHandler
 {
-    public function __construct(private LanguageRepository $languageRepository)
+    public function __construct(private LanguageRepositoryInterface $languageRepository)
     {
         $this->languageRepository = $languageRepository;
     }

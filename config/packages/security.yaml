@@ -39,7 +39,7 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         # Open login endpoint
-        - { path: ^/librarians/login, roles: PUBLIC_ACCESS }
+        - { path: ^/librarian/login, roles: PUBLIC_ACCESS }
 
         # All other routes require a valid token
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

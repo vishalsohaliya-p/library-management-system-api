@@ -89,7 +89,7 @@ class Librarian{
     }
 
     // Getter and Setter for isActive
-    public function isActive(): bool {
+    public function getIsActive(): bool {
         return $this->isActive;
     }
 
@@ -98,7 +98,7 @@ class Librarian{
     }
 
     // Getter and Setter for isDeleted
-    public function isDeleted(): bool {
+    public function getIsDeleted(): bool {
         return $this->isDeleted;
     }
 

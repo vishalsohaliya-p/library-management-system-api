@@ -3,13 +3,13 @@
 namespace App\Catalog\Application\Handler;
 
 use App\Catalog\Application\Command\DeleteLangauageByIdCommand;
-use App\Catalog\Infrastructure\Repository\LanguageRepository;
+use App\Catalog\Domain\Repository\LanguageRepositoryInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(handles: DeleteLangauageByIdCommand::class)]
 class DeleteLanguageByIdCommandHadler
 {
-    public function __construct(private LanguageRepository $languageRepository){
+    public function __construct(private LanguageRepositoryInterface $languageRepository){
         $this->languageRepository = $languageRepository;
     }
 

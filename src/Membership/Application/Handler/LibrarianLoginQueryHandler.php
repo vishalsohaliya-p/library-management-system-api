@@ -25,7 +25,7 @@ class LibrarianLoginQueryHandler
             return null;
         }
 
-        if (!$librarian->isActive() || $librarian->isDeleted()) {
+        if (!$librarian->getIsActive() || $librarian->getIsDeleted()) {
             return null;
         }
 
