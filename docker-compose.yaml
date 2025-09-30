@@ -1,6 +1,7 @@
 services:
   mysql:
     image: mysql:9
+    restart: unless-stopped
     container_name: symfony_mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -11,13 +12,49 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - library_management_system_net
       #- /home/you/project/var/docker/mysql:/var/lib/mysql #bin Mount method hostpath:containerpath
     # healthcheck:
     #   test: ["CMD-SHELL", "mysqladmin ping -h localhost -u symfony --password=symfony || exit 1"]
     #   interval: 10s
     #   timeout: 5s
     #   retries: 5
-    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+    environment:
+      DATABASE_HOST: mysql
+      DATABASE_PORT: 3306
+      DATABASE_NAME: library_management_system
+      DATABASE_USER: symfony
+      DATABASE_PASSWORD: symfony
+      # convenient Doctrine URL (used by Symfony when present)
+      DATABASE_URL: "mysql://symfony:symfony@mysql:3306/library_management_system?serverVersion=9&charset=utf8mb4"
+      APP_ENV: dev
+      APP_DEBUG: '1'
+      # set to 1 to run migrations automatically at startup
+      RUN_MIGRATIONS: '0'
+    networks:
+      - library_management_system_net
+    volumes:
+      - ./:/srv/app:delegated
+    ports:
+      - "8000:8000"
+    tty: true  
 
 volumes:
   mysql_data:
+  
+networks:
+  library_management_system_net:
+    external: true
