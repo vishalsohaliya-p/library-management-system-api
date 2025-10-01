@@ -9,7 +9,7 @@ use App\Catalog\Application\DTO\AddLanguageDto;
 use App\Catalog\Application\DTO\LanguageResponseDto;
 use App\Catalog\Application\DTO\UpdateLanguageDto;
 use App\Catalog\Application\Query\GetAllLanguageQuery;
-use App\Catalog\Application\Query\GetlangauageByIdQuery;
+use App\Catalog\Application\Query\GetLangauageByIdQuery;
 use App\Shared\Infrastructure\Http\ApiResponse;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
