@@ -19,3 +19,31 @@ bin/console lexik:jwt:generate-keypair --This is for key generation Your keys wi
 
 composer require symfony/security-bundle --This is needed for authorization
 That will also pull in symfony/security-core and friends automatically.
+
+
+# Install Kind
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
+chmod +x ./kind
+sudo mv ./kind /usr/local/bin/kind
+
+# Create a Kind cluster named "library-mamangement-system"
+kind create cluster --name lms-cluster
+
+sudo snap install kubectl --classic
+
+kubectl create namespace library-api
+kubectl create namespace library-web
+
+# Build API
+docker build -t lms-api:latest /home/vishalsohaliya/source/repos/php-learning/library-management-system-api
+kind load docker-image lms-api:latest --name lms-cluster
+
+kubectl apply -f k8s/namespace.yaml
+kubectl apply -f k8s/mysql-deployment.yaml
+kubectl apply -f k8s/symfony-deployment.yaml
+
+kubectl get pods -n library
+kubectl get svc -n library
+
+
+kubectl port-forward svc/symfony-api 8080:8000 -n library-api
