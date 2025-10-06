@@ -16,6 +16,7 @@ spec:
       containers:
         - name: symfony-api
           image: lms-api:latest       # <- use the exact name you loaded into Kind
+          imagePullPolicy: Never
           ports:
             - containerPort: 8000
           env:
@@ -36,7 +37,13 @@ spec:
             - name: APP_DEBUG
               value: "1"
             - name: RUN_MIGRATIONS
-              value: "0"
+              value: "1"
+            - name: JWT_SECRET_KEY
+              value: "%kernel.project_dir%/config/jwt/private.pem"
+            - name: JWT_PUBLIC_KEY
+              value: "%kernel.project_dir%/config/jwt/public.pem"
+            - name: JWT_PASSPHRASE
+              value: "1d97e385cdff65c687b2299d6d19be58bbc2be50cae7850dc26501a062d6c249"
 
 ---
 apiVersion: v1

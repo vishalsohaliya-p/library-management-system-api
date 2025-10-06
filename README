@@ -6,6 +6,8 @@ Need monolog bundle for log
 
 composer require symfony/monolog-bundle
 
+composer require --dev doctrine/doctrine-fixtures-bundle
+
 composer require symfony/serializer --This is require for auto map request to dto
 
 composer require symfony/validator --This is require for request validation.
@@ -27,7 +29,8 @@ chmod +x ./kind
 sudo mv ./kind /usr/local/bin/kind
 
 # Create a Kind cluster named "library-mamangement-system"
-kind create cluster --name lms-cluster
+kind create cluster --name lms-cluster --config k8s/kind-config.yaml
+kind create cluster --config kind-config.yaml
 
 sudo snap install kubectl --classic
 
@@ -35,15 +38,24 @@ kubectl create namespace library-api
 kubectl create namespace library-web
 
 # Build API
-docker build -t lms-api:latest /home/vishalsohaliya/source/repos/php-learning/library-management-system-api
+docker build -t lms-api:latest . #/home/vishalsohaliya/source/repos/php-learning/library-management-system-api
 kind load docker-image lms-api:latest --name lms-cluster
 
 kubectl apply -f k8s/namespace.yaml
 kubectl apply -f k8s/mysql-deployment.yaml
 kubectl apply -f k8s/symfony-deployment.yaml
 
+kubectl apply -f k8s/seed-job.yaml
+kubectl apply -f k8s/migrations-job.yaml
+
 kubectl get pods -n library
 kubectl get svc -n library
 
 
 kubectl port-forward svc/symfony-api 8080:8000 -n library-api
+
+docker build -t lms-api:latest .
+
+kubectl logs job/library-api-seed -n library-api
+
+kubectl delete job library-api-seed -n library-api

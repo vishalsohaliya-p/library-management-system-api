@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: symfony-migrations
+  namespace: library-api
+spec:
+  template:
+    spec:
+      containers:
+        - name: migrations
+          image: lms-api:latest         # local image you already loaded
+          imagePullPolicy: Never        # <--- this is important
+          command: ["php", "bin/console", "doctrine:migrations:migrate", "--no-interaction"]
+          env:
+            - name: DATABASE_HOST
+              value: "mysql"
+            - name: DATABASE_PORT
+              value: "3306"
+            - name: DATABASE_NAME
+              value: "library_management_system"
+            - name: DATABASE_USER
+              value: "symfony"
+            - name: DATABASE_PASSWORD
+              value: "symfony"
+            - name: DATABASE_URL
+              value: "mysql://symfony:symfony@mysql:3306/library_management_system?serverVersion=9&charset=utf8mb4"
+      restartPolicy: Never

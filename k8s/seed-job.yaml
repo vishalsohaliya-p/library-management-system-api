@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: library-api-seed
+  namespace: library-api
+spec:
+  template:
+    spec:
+      containers:
+        - name: seed
+          image: lms-api:latest               # Same Symfony API image
+          imagePullPolicy: Never              # Use locally loaded image in kind
+          command:
+            - "bash"
+            - "-lc"
+            - |
+              echo "🌱 Starting Doctrine Fixtures (Seed Data)..."
+
+              # Load all fixtures (or specify group if needed)
+              php bin/console doctrine:fixtures:load --group=librarian --no-interaction --env=dev --append
+
+              echo "✅ Fixtures loaded successfully!"
+          env:
+            - name: APP_ENV
+              value: "dev"
+            - name: DATABASE_HOST
+              value: "mysql"
+            - name: DATABASE_PORT
+              value: "3306"
+            - name: DATABASE_NAME
+              value: "library_management_system"
+            - name: DATABASE_USER
+              value: "symfony"
+            - name: DATABASE_PASSWORD
+              value: "symfony"
+            - name: DATABASE_URL
+              value: "mysql://symfony:symfony@mysql:3306/library_management_system?serverVersion=9&charset=utf8mb4"
+      restartPolicy: Never
